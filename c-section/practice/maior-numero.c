@@ -12,10 +12,26 @@ int maior_numero(int sequencia)
         {
             maior = numero;
         }
+        else if (i == 2)
+        {
+            if (numero > maior)
+            {
+                segundo_maior = maior;
+                maior = numero;
+            }
+            else
+            {
+                segundo_maior = numero;
+            }
+        }
         else if (numero > maior)
         {
             segundo_maior = maior;
             maior = numero;
+        }
+        else if (numero > segundo_maior && numero <= maior)
+        {
+            segundo_maior = numero;
         }
     }
     
