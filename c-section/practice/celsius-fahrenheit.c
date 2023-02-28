@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 
-float celsius_to_fahrenheit(float);
+float celsius_to_fahrenheit(float celsius);
 
 
 int main()
