@@ -9,7 +9,7 @@
  * Parâmetro valor: elemento cuja existência de repetição será verificada;
  * Parâmetro quantidade: número de espaços de memória do vetor v[].
  */
-bool valores_diferentes(int v[], int valor, int quantidade)
+bool numero_repetido(int v[], int valor, int quantidade)
 {
     int repeticao = 0;
 
@@ -17,26 +17,32 @@ bool valores_diferentes(int v[], int valor, int quantidade)
         if (valor == v[i]) {
             repeticao++;
             if (repeticao > 0) {
-                return false;
+                return true;
             }
         }
     }
-    return true;
+    return false;
+}
+
+
+int valores_diferentes(int v[], int tamanho) {
+    int qtd = 0;
+
+    for (int i = 0; i < tam; i++) {
+        printf("Digite um número inteiro: ");
+        scanf("%d", &v[i]);
+        if (!numero_repetido(v, v[i], i)) {
+            qtd++;
+        }
+    }
+    return qtd;
 }
 
 
 int main()
 {
-    int vetor[tam], i, qtd = 0;
+    int vetor[tam], i;
 
-    for (i = 0; i < tam; i++) {
-        printf("Digite um número inteiro: ");
-        scanf("%d", &vetor[i]);
-        if (valores_diferentes(vetor, vetor[i], i)) {
-            qtd++;
-        }
-    }
-
-    printf("Quantidade de números distintos: %d.\n", qtd);
+    printf("Quantidade de números distintos: %d.\n", valores_diferentes(vetor, tam));
     return 0;
 }
