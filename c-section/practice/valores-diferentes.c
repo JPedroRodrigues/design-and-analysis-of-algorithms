@@ -25,6 +25,11 @@ bool numero_repetido(int v[], int valor, int quantidade)
 }
 
 
+/*
+ * Função que retorna a quantidade de elentos diferentes em um vetor.
+ * Parâmetro v[]: vetor a ser analisado.
+ * Parâmetro tamanho: quantidade de elementos que o vetor possui.
+ */
 int valores_diferentes(int v[], int tamanho) {
     int qtd = 0;
 
