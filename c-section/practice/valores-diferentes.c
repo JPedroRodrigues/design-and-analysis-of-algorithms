@@ -3,7 +3,12 @@
 
 #define tam 10
 
-
+/*
+ * Função que retorna true caso haja a repetição de um elemento em um vetor e false caso contrário.
+ * Parâmetro v[]: vetor analisado;
+ * Parâmetro valor: elemento cuja existência de repetição será verificada;
+ * Parâmetro quantidade: número de espaços de memória do vetor v[].
+ */
 bool valores_diferentes(int v[], int valor, int quantidade)
 {
     int repeticao = 0;
