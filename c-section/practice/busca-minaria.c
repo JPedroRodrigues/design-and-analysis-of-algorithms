@@ -2,38 +2,63 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define tam 100
 
-void mostrar_vetor(int v[], int n)
-{   
-    printf("Vetor = [%d", v[0]);
 
+void mostra(int v[], int n)
+{
+    printf("[%d", v[0]);
     for (int i = 1; i < n; i++) {
         printf(", %d", v[i]);
     }
-
     printf("]\n");
 }
 
 
+int busca_binaria(int v[], int n, int e)
+{
+    int inicio, fim, meio;
+
+    inicio = 0;
+    fim = n;
+
+    while (inicio <= fim) {
+        meio = (fim - inicio) / 2;
+
+        if (e > v[meio]) {
+            inicio = meio + 1;
+        }
+
+        else if (e < v[meio]) {
+            fim = meio - 1;
+        }
+        else {
+            return meio;
+        }
+    }
+}
+
+
 int main()
-{   
-    // Inicializar o contador automático
+{
     srand(time(NULL));
+    int vetor[tam];
+    int qtd, elemento;
 
-    // Receber a quantidade de elementos que serão alocados no vetor
-    int qtd;
-
-    printf("Digite a quantidade de elementos do vetor: ");
+    printf("Digite a quantidade de elementos que deseja inserir no vetor: ");
     scanf("%d", &qtd);
 
-    int *vetor = malloc(qtd * sizeof(int));
-
-    // Realizar uma leitura de números aleatórios em ordem crescente
     for (int i = 0; i < qtd; i++) {
-        vetor[i] = rand() % 10 + 10 * i;
+        vetor[i] = rand() % 10 + 10*i;
     }
 
-    mostrar_vetor(vetor, qtd);
+    printf("Vetor criado: ");
+    mostra(vetor, qtd);
+
+    printf("Digite um elemento que deseja encontrar neste vetor: ");
+    scanf("%d", &elemento);
+
+    printf("Posição do elemento %d: %d.\n", elemento, busca_binaria(vetor, qtd, elemento));
 
     return 0;
 }
