@@ -20,10 +20,10 @@ int busca_binaria(int v[], int n, int e)
     int inicio, fim, meio;
 
     inicio = 0;
-    fim = n;
+    fim = n - 1;
 
     while (inicio <= fim) {
-        meio = (fim - inicio) / 2;
+        meio = (inicio + fim) / 2;
 
         if (e > v[meio]) {
             inicio = meio + 1;
