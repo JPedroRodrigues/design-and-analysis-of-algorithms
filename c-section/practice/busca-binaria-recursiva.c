@@ -16,10 +16,10 @@ int busca_binaria_recursiva(int v[], int inicio, int len, int elemento)
             return meio;
         }
         else if (elemento > v[meio]) {
-            busca_binaria_recursiva(v, meio + 1, len, elemento);
+            return busca_binaria_recursiva(v, meio + 1, len, elemento);
         }
         else {
-            busca_binaria_recursiva(v, inicio, meio, elemento);
+            return busca_binaria_recursiva(v, inicio, meio, elemento);
         }
     }
 }
