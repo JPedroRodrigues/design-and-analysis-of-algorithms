@@ -2,23 +2,15 @@
 #include <stdbool.h>
 
 
-bool primo_recursivo(int n, int divisor, int v[])
+bool primo_recursivo(int n, int divisor)
 {
-  if (divisor > n) {
-    return false;
-  }
-  
-  if (n % divisor == 0) {
-    v[0] += 1;
-  }
+  if (divisor > n) return false;
 
-  primo_recursivo(n, divisor + 1, v);
-  
-  if (v[0] == 2) {
-    return true;
-  }
+  if (n == divisor) return true;
 
-  return false;
+  else if (n % divisor == 0) return false;
+
+  return primo_recursivo(n, divisor + 1);
 }
 
 
@@ -58,8 +50,7 @@ int main()
     printf("Função Iterativa: %d não é primo.\n", n);
   }
 
-  int v[] = {0};
-  if (primo_recursivo(n, 1, v)) {
+  if (primo_recursivo(n, 2)) {
     printf("Função Recursiva: O número %d é primo.\n", n);
   } 
   else {
