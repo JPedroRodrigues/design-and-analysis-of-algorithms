@@ -10,8 +10,7 @@ int merge(int a[], int l, int m, int r) {
 
     int i = l;
     int j = r;
-
-    // os intercalação !!!  jãoooooo =^_^= <3 amo muito você sabrinaaa
+    
     for (int k = l; k <= r; ++k) {
         if (b[i] <= b[j]) {
             a[k] = b[i];
