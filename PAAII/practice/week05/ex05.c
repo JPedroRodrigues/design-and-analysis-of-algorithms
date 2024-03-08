@@ -1,44 +1,74 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-
-bool isSegment(int s[], int k, int a[], int n) {
-    int j = 0;
-    bool flag = false;
-
-    for (int i = 0; i < n; i++) {
-        if (s[j] == a[i] && j < k) {
+/*
+* Print the segments present in the sequence
+* Time complexity: O(n²)
+*/
+void printSegment(int a[], int n) {
+    int i = 0;
+    int j = i + 1;
+    
+    printf("(%d", a[i]);
+    while (true) {
+        if (a[i] != a[j]) {
+            printf(")");
+            i = j;
+            if (i < n && j < n) printf(", (");
+        } else {
+            if (i == j) printf("%d", a[j]);
+            else printf(", %d", a[j]);
             j++;
-            flag = true;
-        } else if (flag && s[j] != a[i] && j < k) return false;
+        }
+
+        if (i >= n && j >= n) break;
     }
-    return true;
+    printf("\n");
+}
+
+/*
+* Count the number of segments present in the sequence
+* Time complexity: O(n²)
+*/
+int countSegments(int a[], int n) {
+    int i = 0;
+    int j = i + 1;
+    int count = 0;
+
+    while (true) {
+        if (a[i] != a[j]) {
+            i = j;
+            count++;
+        } else j++;
+        if (i >= n && j >= n) break;
+    }
+    return count;
 }
 
 
-void printArray(int a[], int n) {
+void print(int a[], int n) {
     printf("[%d", a[0]);
     for (int i = 1; i < n; i++) printf(", %d", a[i]);
-    printf("]\n");
+    printf("] ");
 }
 
 
 int main() {
-    int s[] = {1, 5, 7};
-    int k = 3;
+    int a1[] = {5, 2, 2, 3, 4, 4, 4, 4, 4, 1, 1};
+    int a2[] ={3, 3, -1, -1, -1, 12, 12, 12, 3, 3};
 
-    int a[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    int n = 9;
+    int len1 = sizeof(a1) / sizeof(int);
+    int len2 = sizeof(a2) / sizeof(int);
 
-    printf("s = ");
-    printArray(s, k);
+    printf("A sequência ");
+    print(a1, len1);
+    printf("é composta por %d subsequências:\n", countSegments(a1, len1));
+    printSegment(a1, len1);
 
-    printf("a = ");
-    printArray(a, n);
-
-    if (isSegment(s, k, a, n)) printf("s[] is segment of a[]\n");
-    else printf("s[] is not segment of a[].\n");
-
-    return 0;
+    printf("\nA sequência ");
+    print(a2, len2);
+    printf("é composta por %d subsequências:\n", countSegments(a2, len2));
+    printSegment(a1, len1);
+    
     return 0;
 }
