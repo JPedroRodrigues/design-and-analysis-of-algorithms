@@ -26,6 +26,7 @@ void printSegment(int a[], int n) {
     printf("\n");
 }
 
+
 /*
 * Count the number of segments present in the sequence
 * Time complexity: O(n²)
