@@ -28,7 +28,7 @@ int main() {
 
     printf("Na sequência ");
     print(a, len);
-    printf("o comprimento do segmento crescente máximo é %d\n", increasingMaximum(a, len));
+    printf("o comprimento do segmento crescente máximo é %d.\n", increasingMaximum(a, len));
 
     return 0;
 }
