@@ -16,7 +16,7 @@ void printMatrix(int **a, int rows, int cols) {
 
 void simpleSudoku(int **sudoku, int n, int *values, int i, int *usedR, int *usedC) {
     if (i == n) {
-        // printMatrix(sudoku, n, n);
+        printMatrix(sudoku, n, n);
         return;
     }
 
