@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+
 
 void print(int *a, int n) {
     printf("[%d", a[0]);
@@ -38,14 +38,17 @@ void simpleSudoku(int **sudoku, int n, int *values, int i, int *usedR, int *used
         
         printf("\n");
 
-        for (int k = 0; k < n; k++) {
-            if (sudoku[j][i] == 0 && !usedC[values[k]] && !usedR[values[k]]) {
-                usedC[values[k]] = 1;
-                usedR[values[k]] = 1;
+        if (sudoku[j][i] == 0) {
+            for (int k = 0; k < n; k++) {
+                if (!usedC[values[k]] && !usedR[values[k]]) {
+                    usedC[values[k]] = 1;
+                    usedR[values[k]] = 1;
 
-                sudoku[j][i] = values[k];
+                    sudoku[j][i] = values[k];
+                }
             }
         }
+        
         
         for (int k = 0; k < n; k++) {
             usedR[sudoku[j][k]] = 0;
@@ -58,8 +61,6 @@ void simpleSudoku(int **sudoku, int n, int *values, int i, int *usedR, int *used
 
 
 int main() {
-    srand(time(NULL));
-
     int n = 4;
 
     int **sudoku = (int **)calloc(n, sizeof(int *));
