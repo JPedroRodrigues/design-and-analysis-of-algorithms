@@ -19,12 +19,11 @@ int validMove(int **table, int l, int c, int n) {
 
 
 int horse(int i, int n, int l, int c, int direction[8][2]) {
-    int done = 0;
+    int done = (i > n * n);
 
     if (i > n * n) { 
         printMatrix(table, n, n);
-        done = 1;
-        return 1;
+        return done;
     }
 
     for (int j = 0; j < n; j++) {
