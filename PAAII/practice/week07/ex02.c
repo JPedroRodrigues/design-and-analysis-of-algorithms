@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "utils.h"
 
+int n = 8, line = 0, column = 0, move = 0;
+int **table;
 
 int checkTable(int **table, int n) {
     for (int i = 0; i < n; i++) {
@@ -16,10 +18,15 @@ int validMove(int **table, int l, int c, int n) {
 }
 
 
-int horse(int **table, int i, int n, int l, int c, int direction[8][2]) {
-    if (i > n * n) return 1;
+int horse(int i, int n, int l, int c, int direction[8][2]) {
+    int done = 0;
 
-    int boolean = 0;
+    if (i > n * n) { 
+        printMatrix(table, n, n);
+        done = 1;
+        return 1;
+    }
+
     for (int j = 0; j < n; j++) {
         int newL = l + direction[j][0];
         int newC = c + direction[j][1];
@@ -27,17 +34,18 @@ int horse(int **table, int i, int n, int l, int c, int direction[8][2]) {
         if (validMove(table, newL, newC, n)) {
             table[newL][newC] = i;
 
-            horse(table, i + 1, n, newL, newC, direction);
+            done = horse(i + 1, n, newL, newC, direction);
             
-            if (!(i > n * n)) table[l][c] = 0;
-        }        
+            if (!done) table[newL][newC] = 0;
+            else break;
+        }       
     }
+    return done;
 }
 
 
 int main() {
-    int n = 8, line = 0, column = 0, move = 0;
-    int **table = (int **)calloc(n, sizeof(int *));
+    table = (int **)calloc(n, sizeof(int *));
     for (int i = 0; i < n; i++) table[i] = (int *)calloc(n, sizeof(int));
 
     int direction[8][2] = {
@@ -53,7 +61,7 @@ int main() {
 
     int x = 0, y = 0;
     table[x][y] = 1;
-    if (horse(table, 2, 8, x, y, direction)) 
+    if (horse(2, 8, x, y, direction)) 
         printf("É possível realizar o percurso a partir das posições %d e %d\n", x, y);
 
     for (int i = 0; i < n; i++) free(table[i]);
