@@ -11,28 +11,25 @@ int checkTable(int **table, int n) {
 }
 
 
-int validMove(int l, int c, int moveL, int moveC, int n) {
-    if (l + moveL >= n || c + moveC >= n) return 0;
-    if (l + moveL < 0 || c + moveC < 0) return 0;
-    return 1;
+int validMove(int **table, int l, int c, int n) {
+    return (l >= 0 && l < n && c >= 0 && c < n && table[l][c] == 0);
 }
 
 
-void horse(int **table, int n, int l, int c, int direction[8][2]) {
-    if (checkTable(table, n)) printMatrix(table, n, n);
+int horse(int **table, int i, int n, int l, int c, int direction[8][2]) {
+    if (i > n * n) return 1;
 
-    for (int i = 0; i < n; i++) {
-        printf("l = %d\nc = %d\n", l, c);
-        if (!table[l][c] && validMove(l, c, direction[i][0], direction[i][1], n)) {
-            table[l][c]++;
-            printMatrix(table, n, n);
-            printf("\n");
+    int boolean = 0;
+    for (int j = 0; j < n; j++) {
+        int newL = l + direction[j][0];
+        int newC = c + direction[j][1];
 
-            horse(table, n, l + direction[i][0], c + direction[i][1], direction);
+        if (validMove(table, newL, newC, n)) {
+            table[newL][newC] = i;
+
+            horse(table, i + 1, n, newL, newC, direction);
             
-            table[l][c]--;
-            l -= direction[i - 1][0];
-            c -= direction[i - 1][1];
+            if (!(i > n * n)) table[l][c] = 0;
         }        
     }
 }
@@ -54,8 +51,11 @@ int main() {
         {-2, 1}
     };
 
-    horse(table, 8, 0, 0, direction);
-    
+    int x = 0, y = 0;
+    table[x][y] = 1;
+    if (horse(table, 2, 8, x, y, direction)) 
+        printf("É possível realizar o percurso a partir das posições %d e %d\n", x, y);
+
     for (int i = 0; i < n; i++) free(table[i]);
     free(table);
 

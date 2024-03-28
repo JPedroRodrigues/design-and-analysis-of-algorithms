@@ -1,8 +1,8 @@
 #include <stdio.h>
 
 void print(int *a, int n) {
-    printf("[%d", a[0]);
-    for (int i = 1; i < n; i++) printf(", %d", a[i]);
+    printf("[%2d", a[0]);
+    for (int i = 1; i < n; i++) printf(", %2d", a[i]);
     printf("]\n");
 }
 
