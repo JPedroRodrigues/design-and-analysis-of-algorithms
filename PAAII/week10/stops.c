@@ -11,9 +11,7 @@ void print(int *a, int n) {
 int *fuelStops(int *stops, int n, int fuel, int *ls) {
     int *s = (int *) malloc(n * sizeof(int));
 
-    int start = stops[0];
-    s[*ls] = start;
-    *ls = *ls + 1;
+    int start = 0;
 
     for (int i = 1; i < n; i++) {
         if (stops[i] - start > fuel) {
