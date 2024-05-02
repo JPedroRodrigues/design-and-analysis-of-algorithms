@@ -10,16 +10,16 @@ int max(int x, int y) { return x > y ? x : y; }
 
 
 int backPack(int n, int W) {
-    if (n < 0 || W <= 0) return 0;
-    else if (weights[n] > W) return backPack(n - 1, W);
-    else return max(backPack(n - 1, W), backPack(n - 1, W - weights[n]) + values[n]);
+    if (n - 1 < 0 || W <= 0) return 0;
+    else if (weights[n - 1] > W) return backPack(n - 1, W);
+    else return max(backPack(n - 1, W), backPack(n - 1, W - weights[n - 1]) + values[n - 1]);
 }
 
 
 int main() {
     int w = 5;
 
-    printf("Recursive backpack problem: backPack(%d, %d) = %d\n", n - 1, w, backPack(n - 1, w));
+    printf("Recursive backpack problem: backPack(%d, %d) = %d\n", n, w, backPack(n, w));
 
     return 0;
 }

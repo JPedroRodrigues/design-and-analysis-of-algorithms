@@ -12,9 +12,10 @@ int max(int x, int y) { return x > y ? x : y; }
 
 
 int backPack(int n, int W) {
-    if (n < 0 || W <= 0) return 0;
-    else if (weights[n] > W) return backPack(n - 1, W);
-    else return max(backPack(n - 1, W), backPack(n - 1, W - weights[n]) + values[n]);
+    if (n - 1 < 0 || W <= 0) return 0;
+    else if (m[n - 1][W - 1] != -1) return m[n - 1][W];
+    else if (weights[n - 1] > W) return m[n - 1][W - 1] = backPack(n - 1, W);
+    else return m[n - 1][W - 1] = max(backPack(n - 1, W), backPack(n - 1, W - weights[n - 1]) + values[n - 1]);
 }
 
 
@@ -28,7 +29,7 @@ int main() {
         for (int j = 0; j < w; j++) m[i][j] = -1;
     }
 
-    printf("Top down backpack problem: backPack(%d, %d) = %d\n", n - 1, w, backPack(n - 1, w));
+    printf("Top down backpack problem: backPack(%d, %d) = %d\n", n, w, backPack(n, w));
 
     for (int i = 0; i < n; i++) free(m[i]);
     free(m);
