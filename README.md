@@ -1,7 +1,7 @@
-# :books: :computer: Aprendendo C
+# :books: :computer: Projeto e Análise de Algoritmos
 
-Aqui, mostrarei meu progresso durante o aprendizado das linguagens C.
+Repositório dedicado a mostrar todo o meu progresso no aprendizado de algoritmos e suas principais técnicas de elaboração.
 
-# :books: :computer: Learning C
+# :books: :computer: Design and Analysis of Algorithms
 
-This repository was created to store and show to the world all of my progress while I'm learning C.
+A repository made for showing my progress in learning algorithms and their main elaboration techniques.
