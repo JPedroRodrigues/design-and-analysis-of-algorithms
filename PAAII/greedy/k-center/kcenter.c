@@ -1,3 +1,11 @@
+/**
+ * Name                               RA
+ * Gustavo Vilela Mitraud             10400866              
+ * João Pedro Rodrigues Vieira        10403595          
+ * Sabrina Midori F. T. de Carvalho   10410220
+ * 
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -14,7 +22,6 @@ typedef struct {
     char name[200];
     int isCenter;
     Distance distancies[20];
-    int ld;
 } Faculty;
 
 
@@ -22,18 +29,20 @@ Distance min(Distance x, Distance y) { return x.distance < y.distance ? x : y; }
 Distance max(Distance x, Distance y) { return x.distance > y.distance ? x : y; }
 
 
-void kCenter(int k, Faculty *f, int n) {
+Faculty *kCenter(int k, Faculty *f, int n) {
     Faculty *centers = (Faculty *) malloc(k * sizeof(Faculty));
     centers[0] = f[0];  // selecting the first center
     int lc = 1;
     int index = 0;
     
     Distance minimum;
-    Distance maximum = f[0].distancies[0];
+    Distance maximum = f[0].distancies[1];
 
     for (int i = 0; i < k; i++) {
         f[maximum.start - 1].isCenter = 1;
         centers[i] = f[maximum.start - 1];
+
+        maximum.distance = 0;
 
         printf("New center[%d]!!\nid: %d\nname: %s\n", i, centers[i].id, centers[i].name);
 
@@ -42,19 +51,21 @@ void kCenter(int k, Faculty *f, int n) {
             
             minimum = f[j].distancies[0];
 
-            while (index < i) {
+            while (index <= i) {
+                // printf("is %d < %d ?\n", minimum.distance, f[j].distancies[centers[index].id - 1].distance);
                 minimum = min(minimum, f[j].distancies[centers[index].id - 1]);
                 index++;
             }
+            index = 0;
 
-            printf("The minimum distance of building %d from centers", f[j].id);
+            printf("The minimum distance from building %d to centers", f[j].id);
             for (int m = 0; m <= i; m++) printf(" %d", centers[m].id);
             printf(": %d\n\n", minimum.distance);
 
             maximum = max(minimum, maximum);
         }
-        index = 0;
     }
+    return centers;
 }
 
 
@@ -85,7 +96,6 @@ int main() {
         fc.id = i + 1;
         fgets(fc.name, sizeof(fc.name), f);
         fc.isCenter = 0;
-        fc.ld = 0;
         buildings[i] = fc;
     }
 
@@ -96,29 +106,26 @@ int main() {
     for (int i = 0; i < m; i++) {
         fscanf(f, "%d %d %d", &u, &v, &d);
 
-        buildings[u - 1].distancies[buildings[u - 1].ld].start = u;
-        buildings[u - 1].distancies[buildings[u - 1].ld].finish = v;
-        buildings[u - 1].distancies[buildings[u - 1].ld].distance = d;
+        buildings[u - 1].distancies[v - 1].start = u;
+        buildings[u - 1].distancies[v - 1].finish = v;
+        buildings[u - 1].distancies[v - 1].distance = d;
 
-        buildings[v - 1].distancies[buildings[v - 1].ld].start = v;
-        buildings[v - 1].distancies[buildings[v - 1].ld].finish = u;
-        buildings[v - 1].distancies[buildings[v - 1].ld].distance = d;
-
-        buildings[u - 1].ld++;
-        buildings[v - 1].ld++;
+        buildings[v - 1].distancies[u - 1].start = v;
+        buildings[v - 1].distancies[u - 1].finish = u;
+        buildings[v - 1].distancies[u - 1].distance = d;
     }
-
-    // for (int i = 0; i < n; i++) {
-    //     printf("id: %d\nname: %s\n", buildings[i].id, buildings[i].name);
-    //     print(buildings[i].distancies, buildings[i].ld);
-    //     printf("\n");
-    // }
 
     fclose(f);
 
-    kCenter(3, buildings, n);
+    Faculty *centers = kCenter(k, buildings, n);
 
-    free(buildings);
+    printf("=== %d Centers ===\n", k);
+    for (int i = 0; i < k; i++) {
+        printf("| %d.\n", i + 1);
+        printf("| ID: %d\n", centers[i].id);
+        printf("| Name: %s\n", centers[i].name);
+    }
 
+    free(buildings); free(centers);
     return 0;
 }
