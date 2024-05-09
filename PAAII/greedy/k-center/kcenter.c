@@ -52,7 +52,6 @@ Faculty *kCenter(int k, Faculty *f, int n) {
             minimum = f[j].distancies[0];
 
             while (index <= i) {
-                // printf("is %d < %d ?\n", minimum.distance, f[j].distancies[centers[index].id - 1].distance);
                 minimum = min(minimum, f[j].distancies[centers[index].id - 1]);
                 index++;
             }
@@ -117,6 +116,8 @@ int main() {
 
     fclose(f);
 
+    f = fopen("output.txt", "w");
+
     Faculty *centers = kCenter(k, buildings, n);
 
     printf("=== %d Centers ===\n", k);
@@ -124,8 +125,10 @@ int main() {
         printf("| %d.\n", i + 1);
         printf("| ID: %d\n", centers[i].id);
         printf("| Name: %s\n", centers[i].name);
+        fprintf(f, "%s", centers[i].name);
     }
 
+    fclose(f);
     free(buildings); free(centers);
     return 0;
 }
