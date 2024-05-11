@@ -3,7 +3,8 @@
 typedef struct {
     char c;
     int freq;
-} Data;
+    Node *parent, *left, *right;
+} Node;
 
 int minimum(int *frequency, int l, int r) {
     if (l >= r) return frequency[l];
