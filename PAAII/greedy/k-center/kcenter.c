@@ -1,9 +1,13 @@
 /**
+ * K-Centers Problem
+ * 
  * Name                               RA
  * Gustavo Vilela Mitraud             10400866              
  * João Pedro Rodrigues Vieira        10403595          
  * Sabrina Midori F. T. de Carvalho   10410220
  * 
+ * Course: Design and Analysis of Algorithms II
+ * Professor: Leonardo Takuno
 */
 
 #include <stdio.h>
@@ -11,8 +15,8 @@
 
 
 typedef struct {
-    int start;
-    int finish;
+    int origin;
+    int destiny;
     int distance;
 } Distance;
 
@@ -30,25 +34,24 @@ Distance max(Distance x, Distance y) { return x.distance > y.distance ? x : y; }
 
 
 Faculty *kCenter(int k, Faculty *f, int n) {
-    Faculty *centers = (Faculty *) malloc(k * sizeof(Faculty));
-    centers[0] = f[0];  // selecting the first center
-    int lc = 1;
     int index = 0;
     
     Distance minimum;
-    Distance maximum = f[0].distancies[1];
+    Distance maximum = f[0].distancies[1];  // selecting the first building as a center
+
+    Faculty *centers = (Faculty *) malloc(k * sizeof(Faculty));
 
     for (int i = 0; i < k; i++) {
-        f[maximum.start - 1].isCenter = 1;
-        centers[i] = f[maximum.start - 1];
+        // The center will be the the building with the maximum minimum distance from the other centers
+        f[maximum.origin - 1].isCenter = 1;
+        centers[i] = f[maximum.origin - 1];
 
         maximum.distance = 0;
 
-        printf("New center[%d]!!\nid: %d\nname: %s\n", i, centers[i].id, centers[i].name);
-
         for (int j = 0; j < n; j++) {
             if (f[j].isCenter == 1) continue;
-            
+
+            // getting the minimum distance of each building from the centers            
             minimum = f[j].distancies[0];
 
             while (index <= i) {
@@ -57,21 +60,11 @@ Faculty *kCenter(int k, Faculty *f, int n) {
             }
             index = 0;
 
-            printf("The minimum distance from building %d to centers", f[j].id);
-            for (int m = 0; m <= i; m++) printf(" %d", centers[m].id);
-            printf(": %d\n\n", minimum.distance);
-
+            // getting the maximum distance from the recently calculated minimum
             maximum = max(minimum, maximum);
         }
     }
     return centers;
-}
-
-
-void print(Distance *a, int n) {
-    printf("[%d-%d-%d", a[0].start, a[0].finish, a[0].distance);
-    for (int i = 1; i < n; i++) printf(", %d-%d-%d", a[i].start, a[i].finish, a[i].distance);
-    printf("]\n");
 }
 
 
@@ -104,13 +97,13 @@ int main() {
 
     for (int i = 0; i < m; i++) {
         fscanf(f, "%d %d %d", &u, &v, &d);
-
-        buildings[u - 1].distancies[v - 1].start = u;
-        buildings[u - 1].distancies[v - 1].finish = v;
+        
+        buildings[u - 1].distancies[v - 1].origin = u;
+        buildings[u - 1].distancies[v - 1].destiny = v;
         buildings[u - 1].distancies[v - 1].distance = d;
 
-        buildings[v - 1].distancies[u - 1].start = v;
-        buildings[v - 1].distancies[u - 1].finish = u;
+        buildings[v - 1].distancies[u - 1].origin = v;
+        buildings[v - 1].distancies[u - 1].destiny = u;
         buildings[v - 1].distancies[u - 1].distance = d;
     }
 
