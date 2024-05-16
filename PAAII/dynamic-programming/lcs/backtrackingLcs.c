@@ -32,27 +32,13 @@ void printCharMatrix(char **m, int r, int c) {
 }
 
 
-void lcs(char *x, char *y, int m, int n, int **c, char **b) {
-    for (int i = 1; i < m; i++) {
-        for (int j = 1; j < n; j++) {
-            if (x[i - 1] == y[j - 1]) {
-                c[i][j] = c[i - 1][j - 1] + 1;
-                // printIntMatrix(c, m, n);
-                // printf("\n");
-                b[i][j] = 'd';
-            } else if (c[i][j - 1] > c[i - 1][j]) {
-                c[i][j] = c[i][j - 1];
-                // printIntMatrix(c, m, n);
-                // printf("\n");
-                b[i][j] = 'l';
-            } else {
-                c[i][j] = c[i - 1][j];
-                // printIntMatrix(c, m, n);
-                // printf("\n");
-                b[i][j] = 'u';
-            }
-        }
-    }
+int max(int x, int y) { return x > y ? x : y; }
+
+
+int lcs(char *x, char *y, int i, int j, int **c, char **b) {
+    if (i == 0 || j == 0) return 0;
+    else if (x[i - 1] == y[j - 1]) return c[i][j] = lcs(x, y, i - 1, j - 1, c, b) + 1;
+    else return c[i][j] = max(lcs(x, y, i - 1, j, c, b), lcs(x, y, i, j - 1, c, b));
 }
 
 
@@ -80,13 +66,13 @@ int main() {
         c[i] = (int *) calloc(ly, sizeof(int));
     }
 
-    lcs(x, y, lx, ly, c, b);
+    lcs(x, y, lx - 1, ly - 1, c, b);
 
-    printf("Bottom Up (Tabulation):\n");
+    printf("Backtracking:\n");
     printf("- Lenght of the sequence: %d\n", c[lx - 1][ly - 1]);
-    printf("- Longest Common Sequence: ");
-    printLcs(b, x, y, lx - 1, ly - 1);
-    printf("\n");
+    // printf("Longest Common Sequence: ");
+    // printLcs(b, x, y, lx - 1, ly - 1);
+    // printf("\n");
 
     for (int i = 0; i < lx; i++) {
         free(b[i]);
